@@ -7,6 +7,10 @@ def main():
     # defining initial player position vector
     x = SCREEN_WIDTH / 2
     y = SCREEN_HEIGHT / 2
+    # defining the game groups
+    updatables = pygame.sprite.Group()
+    drawables = pygame.sprite.Group()
+    Player.containers = (updatables, drawables)
     player = Player(x, y, PLAYER_RADIUS)
     print("Starting asteroids!")
     print(f"Screen width: {SCREEN_WIDTH}")
@@ -20,8 +24,10 @@ def main():
             if event.type == pygame.QUIT:
                 return
         screen.fill((0, 0, 0))
-        player.update(dt)
-        player.draw(screen)
+        for updatable in updatables:
+            updatable.update(dt)
+        for drawable in drawables:
+            drawable.draw(screen)
         pygame.display.flip()
         mls = time.tick(60)
         dt = mls/1000

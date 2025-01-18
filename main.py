@@ -30,6 +30,7 @@ def main():
     dt = 0
     #defining the game-loop
     while True:
+        font = pygame.font.Font(None, 36)
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 return
@@ -41,10 +42,16 @@ def main():
                 if bullet.collision(asteroid):
                     bullet.kill()
                     asteroid.split()
+                    player.up_score()
             if asteroid.collision(player):
-                sys.exit()
+                player.decrement_health()
+                #if player.health < 0:
+                 #   sys.exit()
         for drawable in drawables:
             drawable.draw(screen)
+        # Draw score to the screen
+        score_text = font.render(f'Score: {player.health}', True, (255, 255, 255))
+        screen.blit(score_text, (10, 10))
         pygame.display.flip()
         mls = time.tick(60)
         dt = mls/1000

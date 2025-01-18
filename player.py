@@ -8,6 +8,8 @@ class Player(CircleShape):
         super().__init__(x, y, PLAYER_RADIUS)
         self.rotation = 0
         self.timer = 0
+        self.score = 0
+        self.health = 5
     
     def triangle(self):
         forward = pygame.Vector2(0, 1).rotate(self.rotation)
@@ -38,6 +40,12 @@ class Player(CircleShape):
             self.move(-dt)
         if keys[pygame.K_SPACE]:
             self.shoot()
+
+    def up_score(self):
+        self.score += 1 
+    
+    def decrement_health(self):
+        self.health -= 1
     
     def shoot(self):
         if self.timer > 0:
